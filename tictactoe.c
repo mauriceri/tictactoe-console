@@ -8,20 +8,17 @@ const char playerX = 'x';
 const char playerO = 'o';
 char current_player = 'x';
 
-char** raster;
+char** pattern;
 
 int status = 0;
 
-void createRaster(){
+void createPattern(){
 	
-	
-	
-
-	raster = (char**)malloc(3 * sizeof(char));
+	pattern = (char**)malloc(3 * sizeof(char));
 
 	int i;
 	for(i =0; i<3; i++){
-		raster[i] = (char*)malloc(3 * sizeof(char));
+		pattern[i] = (char*)malloc(3 * sizeof(char));
 
 	}
 
@@ -29,17 +26,12 @@ void createRaster(){
 	int j ;
 	for(i = 0; i < 3; i++){
 		for(j = 0; j < 3; j++){
-			raster[i][j] = '-';
+			pattern[i][j] = '-';
 		}
 	}
 	
-	
-	//debugfunktion();
-	drawRaster();
+	drawPattern();
 }
-
-
-
 
 
 void input(){
@@ -49,46 +41,28 @@ void input(){
 
 
 	do{
-
-		
-
-		printf("Spieler %c ist am Zug \n", current_player);
-		printf("Zeile angeben: \n");
+		printf("Player %c turn\n", current_player);
+		printf("Row: \n");
 		scanf("%d", &i);
-		printf("Spalte angeben: \n");
+		printf("Column: \n");
 		scanf("%d", &j);
 
-		
-
 		if( i > 3 || j > 3 || i < 1 || j < 1){
-			printf("\nFalsche eingabe, neu eingeben!\n");
+			printf("\n Wrong input! Please change input.\n");
 			
 		}else{
-			inputcheck = raster[i-1][j-1];
+			inputcheck = pattern[i-1][j-1];
 		}
 
 		if(inputcheck == 'x' || inputcheck == 'o'){
-			printf("(Feld bereits belegt!) \n");
+			printf("(Field taken!) \n");
 
 			j = 5;
 		}
 
-
-		
-		
-
 	}while(i > 3 || j > 3 || i < 1 || j < 1);
 	
-	/*
-	if( i > 3 || j > 3 || i < 1 || j < 1){
-		printf("Falsche eingabe, neu eingeben!\n");
-		input();
-	}
-	*/
-	
-	
-	updateRaster(i-1, j-1, current_player);
-	
+	updatePattern(i-1, j-1, current_player);
 	
 }
 
@@ -113,21 +87,21 @@ void changePlayer(){
 
 }
 
-void updateRaster(int i, int j, char current){
+void updatePattern(int i, int j, char current){
 	
-	raster[i][j] = current;
+	pattern[i][j] = current;
 	
-	drawRaster();
+	drawPattern();
 	
 
 }
 
 
-void drawRaster(){
+void drawPattern(){
 
-	printf("| %c | %c | %c | \n", raster[0][0], raster[0][1], raster[0][2]);
-	printf("| %c | %c | %c | \n", raster[1][0], raster[1][1], raster[1][2]);	
-	printf("| %c | %c | %c | \n", raster[2][0], raster[2][1], raster[2][2]);
+	printf("| %c | %c | %c | \n", pattern[0][0], pattern[0][1], pattern[0][2]);
+	printf("| %c | %c | %c | \n", pattern[1][0], pattern[1][1], pattern[1][2]);	
+	printf("| %c | %c | %c | \n", pattern[2][0], pattern[2][1], pattern[2][2]);
 }
 
 
@@ -135,27 +109,23 @@ void gameState(){
 
 	int i;
 	for(i = 0; i < 3; i++){
-		if(raster[i][0] == current_player && raster[i][1] == current_player && raster[i][2] == current_player ){
+		if(pattern[i][0] == current_player && pattern[i][1] == current_player && pattern[i][2] == current_player ){
 			winMsg();
 		}
 	}
 
 	for(i = 0; i < 3; i++){
-		if(raster[0][i] == current_player && raster[1][i] == current_player && raster[2][i] == current_player ){
+		if(pattern[0][i] == current_player && pattern[1][i] == current_player && pattern[2][i] == current_player ){
 			winMsg();
 		}
 	}
 
-	if(raster[0][0] == current_player && raster[1][1] == current_player && raster[2][2] == current_player){
+	if(pattern[0][0] == current_player && pattern[1][1] == current_player && pattern[2][2] == current_player){
 		winMsg();
-	}else if(raster[0][2] == current_player && raster[1][1] == current_player && raster[2][0] == current_player){
+	}else if(pattern[0][2] == current_player && pattern[1][1] == current_player && pattern[2][0] == current_player){
 		winMsg();
 	}
-
-	
-
 }
-
 
 
 void debugfunktion(){
@@ -164,32 +134,25 @@ void debugfunktion(){
 	int j ;
 	for(i = 0; i < 3; i++){
 		for(j = 0; j < 3; j++){
-			raster[i][j] = 'x';
+			pattern[i][j] = 'x';
 		}
 	}
-
-
 }
 
 void winMsg(){
-	printf("Spieler %c hat gewonnen yaaay \n", current_player);
+	printf("Player %c wins! \n", current_player);
 	status = 0;
 }
-
-
 void startGame(){
 	
 	status = 1;
 
-	createRaster();
+	createPattern();
 
-	
 	while(isRunning()){
 		input();
 		gameState();
 		changePlayer();
 	}
-		
-
 }
 

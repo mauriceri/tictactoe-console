@@ -1,19 +1,14 @@
 #ifndef TICTACTOE_H_
 #define TICTACTOE_H_
 
-
-
-void createRaster();
+void createPattern();
 void startGame();
 int isRunning();
 void input();
 void changePlayer();
 void gameState();
-void updateRaster(int i, int j, char current);
-void drawRaster();
+void updatePattern(int i, int j, char current);
+void drawPattern();
 void winMsg();
-
-void debugfunktion();
-
 
 #endif
