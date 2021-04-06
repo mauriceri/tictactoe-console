@@ -1,2 +1,2 @@
-# tictactoe
-A simple tictactoe Console game written in C for learning purpose.
+# TicTacToe
+A simple TicTacToe console game written in C for learning purposes.
